@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const LoginForm = ({ login, loading, error }) => {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const username = event.target[0].value;
-    const password = event.target[1].value;
     login(username, password);
   };
 
@@ -26,6 +29,8 @@ const LoginForm = ({ login, loading, error }) => {
               type='text'
               className='form-control'
               id='username'
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
             />
           </div>
           <div className='mb-3'>
@@ -37,6 +42,8 @@ const LoginForm = ({ login, loading, error }) => {
               type='password'
               className='form-control'
               id='password'
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <button type='submit' className='btn btn-primary'>

@@ -1,8 +1,24 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createBrowserHistory } from 'history'
+import { applyMiddleware, compose, createStore } from 'redux'
+import { routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk';
-import rootReducer from 'redux/reducers';
-import authInterceptor from 'redux/middlewares/authInterceptor';
+import authInterceptor from '../middlewares/authInterceptor';
+import createRootReducer from '../reducers/index';
 
-const store = createStore(rootReducer, applyMiddleware(thunk, authInterceptor));
+export const history = createBrowserHistory();
 
-export default store;
+export default function configureStore(preloadedState) {
+  const store = createStore(
+    createRootReducer(history), 
+    preloadedState,
+    compose(
+      applyMiddleware(
+        routerMiddleware(history), 
+        thunk,
+        authInterceptor
+      ),
+    ),
+  )
+
+  return store;
+}

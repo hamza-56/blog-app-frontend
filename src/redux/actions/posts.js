@@ -1,7 +1,9 @@
+import { push } from 'connected-react-router'
 import axios from 'axios';
 import * as actions from '.';
 import { API_ROOT_URL } from 'config';
 import { getAuthHeader } from 'utils/authHeader';
+
 
 const fetchPostsStart = () => {
   return {
@@ -111,7 +113,10 @@ export const createPost = (title, content) => (dispatch) => {
       { headers: getAuthHeader() }
     )
     .then(
-      (response) => dispatch(createPostSuccess(response.data)),
+      (response) => {
+        dispatch(createPostSuccess(response.data));
+        dispatch(push('/'));
+      },
       (error) => dispatch(createPostFailure(error.response))
     );
 };

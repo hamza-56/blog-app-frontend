@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import routes from 'routes';
-
+import HeaderContainer from "containers/HeaderContainer";
 import './App.css';
 
 const RouteWithSubRoutes = (route) => {
@@ -15,13 +15,14 @@ const RouteWithSubRoutes = (route) => {
 
 const App = () => {
   return (
-    <Router>
+    <>
+      <HeaderContainer/>
       <Switch>
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
       </Switch>
-    </Router>
+    </>
   );
 };
 

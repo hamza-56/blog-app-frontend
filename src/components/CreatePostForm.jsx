@@ -1,8 +1,12 @@
-const LoginForm = ({ createPost, loading, error }) => {
+import { useState } from 'react';
+
+const CreatePostForm = ({ createPost, loading, error }) => {
+  
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const title = event.target[0].value;
-    const content = event.target[1].value;
     createPost(title, content);
   };
 
@@ -24,6 +28,8 @@ const LoginForm = ({ createPost, loading, error }) => {
               type='text'
               className='form-control'
               id='title'
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
             />
           </div>
           <div className='mb-3'>
@@ -35,6 +41,8 @@ const LoginForm = ({ createPost, loading, error }) => {
               type='text'
               className='form-control'
               id='content'
+              value={content}
+              onChange={(event) => setContent(event.target.value)}
             />
           </div>
           <button type='submit' className='btn btn-primary'>
@@ -46,4 +54,4 @@ const LoginForm = ({ createPost, loading, error }) => {
   );
 };
 
-export default LoginForm;
+export default CreatePostForm;

@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import axios from 'axios';
 import * as actions from '.';
 import { API_ROOT_URL } from 'config';
@@ -36,10 +37,11 @@ export const loginUser = (username, password) => (dispatch) => {
     .then(
       (response) => {
         dispatch(loginUserSuccess(username));
+        dispatch(push('/'));
         localStorage.setItem('username', username);
         localStorage.setItem('jwtToken', response.data.access);
       },
-      (error) => dispatch(loginUserFailure(error))
+      (error) => dispatch(loginUserFailure(error.response))
     );
 };
 
@@ -60,7 +62,7 @@ const signupUserFailure = (error) => {
   return {
     type: actions.SIGNUP_USER_FAILURE,
     payload: {
-      msg: error.data.username? error.data.username : error.data.password,
+      msg: error.data.username ? error.data.username : error.data.password,
       code: error.data.code,
       status: error.status,
     },
@@ -75,7 +77,10 @@ export const signupUser = (username, password) => (dispatch) => {
       password,
     })
     .then(
-      (response) => dispatch(signupUserSuccess(response.data)),
+      (response) => {
+        dispatch(signupUserSuccess(response.data));
+        dispatch(push('/login'));
+      },
       (error) => dispatch(signupUserFailure(error.response))
     );
 };
