@@ -1,1 +1,1 @@
-export const API_ROOT_URL = 'http://localhost:8000/api'
+export const API_ROOT_URL = 'https://obscure-dusk-77200.herokuapp.com/api'
