@@ -1,11 +1,9 @@
-import { Link } from 'react-router-dom';
-
-const LoginForm = ({ login, loading, error }) => {
+const LoginForm = ({ createPost, loading, error }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const username = event.target[0].value;
-    const password = event.target[1].value;
-    login(username, password);
+    const title = event.target[0].value;
+    const content = event.target[1].value;
+    createPost(title, content);
   };
 
   if (loading) {

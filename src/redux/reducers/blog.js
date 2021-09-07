@@ -66,6 +66,27 @@ const blogsReducer = (state = initialState, action) => {
         error: action.payload,
       };
     }
+    case actions.CREATE_POST_START: {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    }
+    case actions.CREATE_POST_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    }
+    case actions.CREATE_POST_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
     default:
       return state;
   }

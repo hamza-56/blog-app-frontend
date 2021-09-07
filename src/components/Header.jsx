@@ -25,6 +25,7 @@ const Header = ({ username, logout }) => (
                 role='button'
                 data-bs-toggle='dropdown'
                 aria-expanded='false'
+                href="/#"
               >
                 {username}
               </a>
@@ -38,7 +39,7 @@ const Header = ({ username, logout }) => (
                   <hr className='dropdown-divider' />
                 </li>
                 <li>
-                  <a className='dropdown-item' onClick={logout}>
+                  <a className='dropdown-item' onClick={logout} href="/#">
                     Logout
                   </a>
                 </li>

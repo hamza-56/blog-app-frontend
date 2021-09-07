@@ -78,3 +78,40 @@ export const resetPosts = () => {
     type: actions.RESET_POSTS,
   };
 };
+
+const createPostStart = () => {
+  return {
+    type: actions.CREATE_POST_START,
+  };
+};
+
+const createPostSuccess = () => {
+  return {
+    type: actions.CREATE_POST_SUCCESS,
+  };
+};
+
+const createPostFailure = (error) => {
+  return {
+    type: actions.CREATE_POST_FAILURE,
+    payload: {
+      msg: error.data.detail,
+      code: error.data.code,
+      status: error.status,
+    },
+  };
+};
+
+export const createPost = (title, content) => (dispatch) => {
+  dispatch(createPostStart());
+  return axios
+    .post(
+      `${API_ROOT_URL}/blogs/`,
+      { title, content },
+      { headers: getAuthHeader() }
+    )
+    .then(
+      (response) => dispatch(createPostSuccess(response.data)),
+      (error) => dispatch(createPostFailure(error.response))
+    );
+};
