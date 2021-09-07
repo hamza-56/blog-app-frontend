@@ -1,59 +1,80 @@
 import axios from 'axios';
 import * as actions from '.';
-import config from 'config';
+import { API_ROOT_URL } from 'config';
+import { getAuthHeader } from 'utils/authHeader';
 
-const ROOT_URL = config.API_ROOT_URL;
-
-export const fetchPosts = () => {
-  const request = axios({
-    method: 'get',
-    url: `${ROOT_URL}/blogs`,
-    headers: [],
-  });
-
+const fetchPostsStart = () => {
   return {
-    type: actions.FETCH_POSTS,
-    payload: request,
+    type: actions.FETCH_POSTS_START,
   };
 };
 
-export const fetchPostsSuccess = (posts) => {
+const fetchPostsSuccess = (posts) => {
   return {
     type: actions.FETCH_POSTS_SUCCESS,
     payload: posts,
   };
 };
 
-export const fetchPostsFailure = (error) => {
+const fetchPostsFailure = (error) => {
   return {
-    type: FETCH_POSTS_FAILURE,
-    payload: error,
+    type: actions.FETCH_POSTS_FAILURE,
+    payload: {
+      msg: error.data.detail,
+      code: error.data.code,
+      status: error.status,
+    },
   };
 };
 
-export const fetchPostDetails = (id) => {
-  const request = axios({
-    method: 'get',
-    url: `${ROOT_URL}/blogs/${id}`,
-    headers: [],
-  });
+export const fetchPosts = () => (dispatch) => {
+  dispatch(fetchPostsStart());
+  return axios
+    .get(`${API_ROOT_URL}/blogs/`, {
+      headers: getAuthHeader(),
+    })
+    .then(
+      (response) => dispatch(fetchPostsSuccess(response.data)),
+      (error) => dispatch(fetchPostsFailure(error.response))
+    );
+};
 
+const fetchPostDetailsStart = () => {
   return {
-    type: actions.FETCH_POST_DETAILS,
-    payload: request,
+    type: actions.FETCH_POST_DETAILS_START,
   };
 };
 
-export const fetchPostDetailsSuccess = (activePost) => {
+const fetchPostDetailsSuccess = (post) => {
   return {
-    type: FETCH_POST_DETAILS_SUCCESS,
-    payload: activePost,
+    type: actions.FETCH_POST_DETAILS_SUCCESS,
+    payload: post,
   };
 };
 
-export const fetchPostDetailsFailure = (error) => {
+const fetchPostDetailsFailure = (error) => {
   return {
-    type: FETCH_POST_DETAILS_FAILURE,
-    payload: error,
+    type: actions.FETCH_POST_DETAILS_FAILURE,
+    payload: {
+      msg: error.data.detail,
+      code: error.data.code,
+      status: error.status,
+    },
+  };
+};
+
+export const fetchPostDetails = (slug) => (dispatch) => {
+  dispatch(fetchPostDetailsStart());
+  return axios
+    .get(`${API_ROOT_URL}/blogs/${slug}/`, { headers: getAuthHeader() })
+    .then(
+      (response) => dispatch(fetchPostDetailsSuccess(response.data)),
+      (error) => dispatch(fetchPostDetailsFailure(error.response))
+    );
+};
+
+export const resetPosts = () => {
+  return {
+    type: actions.RESET_POSTS,
   };
 };

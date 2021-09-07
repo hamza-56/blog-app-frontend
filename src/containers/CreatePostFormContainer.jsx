@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PostDetail from 'components/PostDetail';
+import CreatePostForm from 'components/CreatePostForm';
 import { fetchPostDetails } from 'redux/actions/posts';
 
 const mapStateToProps = (state) => {
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePostForm);

@@ -1,27 +1,33 @@
-import Index from './pages/Index';
 import PostsIndex from './pages/PostsIndex';
 import PostsNew from './pages/PostsNew';
 import PostsShow from './pages/PostsShow';
+import Login from './pages/Login';
+import SignUp from 'pages/SignUp';
+
 
 const routes = [
   {
-    path: "",
-    component: Index
+    path: "/",
+    exact: true,
+    component: PostsIndex
   },
   {
-    path: "/blogs",
-    component: PostsIndex,
-    routes: [
-      {
-        path: "/blogs/create",
-        component: PostsNew
-      },
-      {
-        path: "/blogs/:id",
-        component: PostsShow
-      }
-    ]
-  }
+    path: "/login",
+    component: Login
+  },
+  {
+    path: "/signup",
+    component: SignUp
+  },
+  {
+    path: "/new",
+    component: PostsNew
+  },
+  {
+    path: "/:slug",
+    component: PostsShow
+  },
+  
 ];
 
 export default routes;

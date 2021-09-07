@@ -9,7 +9,7 @@ const initialState = {
 
 const blogsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.FETCH_POSTS: {
+    case actions.FETCH_POSTS_START: {
       return {
         ...state,
         all: [],
@@ -30,10 +30,10 @@ const blogsReducer = (state = initialState, action) => {
         ...state,
         all: [],
         loading: false,
-        error: action.payload.message,
+        error: action.payload,
       };
     }
-    case actions.FETCH_POST_DETAILS: {
+    case actions.FETCH_POST_DETAILS_START: {
       return {
         ...state,
         activeBlog: null,
@@ -54,7 +54,16 @@ const blogsReducer = (state = initialState, action) => {
         ...state,
         activeBlog: null,
         loading: false,
-        error: action.payload.message,
+        error: action.payload,
+      };
+    }
+    case actions.RESET_POSTS: {
+      return {
+        ...state,
+        all: [],
+        activeBlog: null,
+        loading: false,
+        error: action.payload,
       };
     }
     default:
